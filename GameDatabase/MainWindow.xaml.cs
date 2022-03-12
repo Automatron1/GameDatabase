@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql;
 
 namespace GameDatabase
 {
@@ -36,7 +37,7 @@ namespace GameDatabase
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
             string query = "SELECT col0,col1 FROM YourTable";
-            var cmd = new MySqlCommand(query, dbCon.Connection);
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, dbCon.Connection);
             var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
