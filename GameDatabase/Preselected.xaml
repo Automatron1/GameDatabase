@@ -9,6 +9,7 @@
     <Grid>
         <Button x:Name="trendingGames" Content="Trending" HorizontalAlignment="Left" Margin="531,298,0,0" VerticalAlignment="Top" Click="trendingGames_Click"/>
         <Button x:Name="newAdditions" Content="New Additions" HorizontalAlignment="Left" Margin="201,303,0,0" VerticalAlignment="Top" Click="newAdditions_Click"/>
+        <Button x:Name="backButton" Content="&lt;" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.514,0.492" Click="backButton_Click"/>
 
     </Grid>
 </Window>

@@ -27,14 +27,14 @@ namespace GameDatabase
          InitializeComponent();
          Current = this;
       }
-
+      // Find Games Button
       private void Button_Click(object sender, RoutedEventArgs e)
       {
          Window lastWindow = this;
+         //page to go to
          FindGames findGames = new FindGames(lastWindow);
          this.Hide();
          findGames.ShowDialog();
-         //this.Visibility = Visibility.Collapsed;
          findGames.Show();
 
       }

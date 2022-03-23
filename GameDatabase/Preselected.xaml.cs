@@ -17,19 +17,38 @@ namespace GameDatabase
    /// </summary>
    public partial class Preselected : Window
    {
-      public Preselected()
+      public static Preselected Current;
+      public Preselected(Window lastWindow)
       {
          InitializeComponent();
+         Current = this;
       }
 
       private void trendingGames_Click(object sender, RoutedEventArgs e)
       {
-
+         Window lastWindow = this;
+         //page to go to
+         TrendingGames trendGames = new TrendingGames(lastWindow);
+         this.Hide();
+         trendGames.ShowDialog();
+         trendGames.Show();
       }
 
       private void newAdditions_Click(object sender, RoutedEventArgs e)
       {
+         Window lastWindow = this;
+         //page to go to
+         NewGames newGames = new NewGames(lastWindow);
+         this.Hide();
+         newGames.ShowDialog();
+         newGames.Show();
+      }
 
+      private void backButton_Click(object sender, RoutedEventArgs e)
+      {
+         this.Hide();
+         //previous page
+         FindGames.Current.ShowDialog();
       }
    }
 }
