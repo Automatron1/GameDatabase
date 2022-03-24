@@ -11,10 +11,18 @@ namespace GameDatabase
       // public string dateAdded = null;
       public string gameName { get; set; }
    // public string releaseDate = null;
-   public string[] genreList = new string[13];
+   //public string[] genreList = new string[13];
+      public string genre { get; set; }
       public override string ToString()
       {
-         return gameName + " Player Count: " + playerCount + " Studio: " + studioName + "\n";
+         if (gameName != null)
+         {
+            return gameName + " Player Count: " + playerCount + " Studio: " + studioName + "\n";
+         }
+         else
+         {
+            return genre+ "\n";
+         }
       }
    }
 }

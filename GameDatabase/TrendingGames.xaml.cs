@@ -44,7 +44,8 @@ namespace GameDatabase
          if (dbCon.IsConnect())
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
-            string query = "SELECT Games.gameName, Studios.studioName, Games.playerCount FROM Games JOIN Studios ON Studios.gameID = Games.GameID WHERE Games.isTrending = 1;";
+            string query = "SELECT Games.gameName, Studios.studioName, Games.playerCount " + 
+               "FROM Games JOIN Studios ON Studios.gameID = Games.GameID WHERE Games.isTrending = 1;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, dbCon.Connection);
             var reader = cmd.ExecuteReader();
             gameList.Clear();
@@ -55,19 +56,44 @@ namespace GameDatabase
                nextGame.studioName = reader.GetString(1);
                nextGame.playerCount = reader.GetString(2);
                gameList.Add(nextGame);
-               PopulateList();
+               PopulateGameList();
                //string someStringFromColumnZero = reader.GetString(0);
                //ListBox.Show(someStringFromColumnZero);
             }
+            reader.Close();
+           // dbCon.Close();
+            // querey 2
+            string query1 = "SELECT Genres.genreName FROM GenreList JOIN Games ON Games.gameID = GenreList.gameID JOIN Genres ON GenreList.genreID = Genres.genreID WHERE Games.isTrending = '1';";
+            var cmd1 = new MySql.Data.MySqlClient.MySqlCommand(query1, dbCon.Connection);
+            var reader1 = cmd1.ExecuteReader();
+            gameList.Clear();
+            while (reader1.Read())
+            {
+               Game nextGame = new Game();
+
+               nextGame.genre = reader1.GetString(0);
+
+               gameList.Add(nextGame);
+               PopulateGenreList();
+            }
             dbCon.Close();
          }
+         
       }
-      private void PopulateList()
+      private void PopulateGameList()
       {
          gameDisplay.Items.Clear();
          foreach (Game g in gameList)
          {
             gameDisplay.Items.Add(g);
+         }
+      }
+      private void PopulateGenreList()
+      {
+         genreList.Items.Clear();
+         foreach (Game g in gameList)
+         {
+            genreList.Items.Add(g);
          }
       }
    }

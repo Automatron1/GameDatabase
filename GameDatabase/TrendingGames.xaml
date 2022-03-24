@@ -8,7 +8,7 @@
         Title="TrendingGames" Height="450" Width="800">
     <Grid>
         <ListBox x:Name="gameDisplay" Margin="0,129,0,0" HorizontalAlignment="Left" Width="458"/>
-        <ListBox x:Name="genreList" Margin="508,129,93,0"/>
+        <ListBox x:Name="genreList" Margin="463,129,138,0"/>
         <Label Content="Genres" HorizontalAlignment="Left" Margin="508,87,0,0" VerticalAlignment="Top"/>
         <Label Content="Games" HorizontalAlignment="Left" Margin="152,87,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.647,0.443"/>
         <Button Content="&lt;" HorizontalAlignment="Left" Margin="34,32,0,0" VerticalAlignment="Top" Click="Button_Click"/>
