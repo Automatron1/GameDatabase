@@ -48,9 +48,3 @@ namespace GameDatabase
       }
    }
 }
-
-/* int actorID = reader.GetInt32(0);
-   string firstName =  
- 
- 
- */

@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:GameDatabase"
         mc:Ignorable="d"
         Title="NewGames" Height="450" Width="800">
-    <Grid>
-        <ListBox Margin="0,129,450,0"/>
-        <ListBox Margin="355,129,210,0"/>
-        <Label Content="Genres" HorizontalAlignment="Left" Margin="449,98,0,0" VerticalAlignment="Top"/>
-        <Label Content="Games" HorizontalAlignment="Left" Margin="156,93,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="backButton" Content="&lt;" HorizontalAlignment="Left" Margin="33,34,0,0" VerticalAlignment="Top" Click="backButton_Click"/>
+  <Grid>
+    <ListBox x:Name="gameDisplay" Margin="0,129,362,0"/>
+    <ListBox x:Name="genreList" Margin="472,124,93,5"/>
+    <Label Content="Genres" HorizontalAlignment="Left" Margin="566,93,0,0" VerticalAlignment="Top"/>
+    <Label Content="Games" HorizontalAlignment="Left" Margin="196,93,0,0" VerticalAlignment="Top"/>
+    <Button x:Name="backButton" Content="&lt;" HorizontalAlignment="Left" Margin="33,34,0,0" VerticalAlignment="Top" Click="backButton_Click"/>
 
-    </Grid>
+  </Grid>
 </Window>

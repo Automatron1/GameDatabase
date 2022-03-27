@@ -25,17 +25,7 @@ namespace GameDatabase
       {
          InitializeComponent();
          Current = this;
-      }
-      // back button
-      private void Button_Click(object sender, RoutedEventArgs e)
-      {
-         //previous page
-         this.Hide();
-         Preselected.Current.ShowDialog();
-      }
 
-      private void Button_Click_1(object sender, RoutedEventArgs e)
-      {
          var dbCon = DBConnection.Instance();
          dbCon.Server = "209.106.201.103";
          dbCon.DatabaseName = "dbstudent4";
@@ -44,7 +34,7 @@ namespace GameDatabase
          if (dbCon.IsConnect())
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
-            string query = "SELECT Games.gameName, Studios.studioName, Games.playerCount " + 
+            string query = "SELECT Games.gameName, Studios.studioName, Games.playerCount " +
                "FROM Games JOIN Studios ON Studios.gameID = Games.GameID WHERE Games.isTrending = 1;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, dbCon.Connection);
             var reader = cmd.ExecuteReader();
@@ -61,7 +51,7 @@ namespace GameDatabase
                //ListBox.Show(someStringFromColumnZero);
             }
             reader.Close();
-           // dbCon.Close();
+            // dbCon.Close();
             // querey 2
             string query1 = "SELECT Genres.genreName FROM GenreList JOIN Games ON Games.gameID = GenreList.gameID JOIN Genres ON GenreList.genreID = Genres.genreID WHERE Games.isTrending = '1';";
             var cmd1 = new MySql.Data.MySqlClient.MySqlCommand(query1, dbCon.Connection);
@@ -76,8 +66,22 @@ namespace GameDatabase
                gameList.Add(nextGame);
                PopulateGenreList();
             }
-            dbCon.Close();
+            reader.Close();
+            reader1.Close();
+            //dbCon.Close();
          }
+      }
+      // back button
+      private void Button_Click(object sender, RoutedEventArgs e)
+      {
+         //previous page
+         this.Hide();
+         Preselected.Current.ShowDialog();
+      }
+
+      private void Button_Click_1(object sender, RoutedEventArgs e)
+      {
+         MessageBox.Show("I am useless button");
          
       }
       private void PopulateGameList()
@@ -85,6 +89,7 @@ namespace GameDatabase
          gameDisplay.Items.Clear();
          foreach (Game g in gameList)
          {
+            g.displayCase = 1;
             gameDisplay.Items.Add(g);
          }
       }
@@ -93,6 +98,7 @@ namespace GameDatabase
          genreList.Items.Clear();
          foreach (Game g in gameList)
          {
+            g.displayCase = 2;
             genreList.Items.Add(g);
          }
       }
