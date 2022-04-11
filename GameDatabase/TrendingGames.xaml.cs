@@ -61,7 +61,7 @@ namespace GameDatabase
             {
                Game nextGame = new Game();
 
-               nextGame.genre = reader1.GetString(0);
+          //     nextGame.genre = reader1.GetString(0);
 
                gameList.Add(nextGame);
                PopulateGenreList();

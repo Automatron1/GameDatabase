@@ -10,9 +10,10 @@ namespace GameDatabase
       public string playerCount { get; set; }
       public DateTime dateAdded = new DateTime();
       public string gameName { get; set; }
+      public string gameID { get; set; }
    // public string releaseDate = null;
-   //public string[] genreList = new string[13];
-      public string genre { get; set; }
+     // public string[] genreList = new string[10];
+     
       public int displayCase;
       public override string ToString()
       {
@@ -33,10 +34,12 @@ namespace GameDatabase
             {
                return gameName + " Player Count: " + playerCount + " Studio: " + studioName + "\n";
             }
+            /*
             case 2:
             {
                return genre + "\n";
             }
+            */
             case 3:
             {
                return gameName + " Date Added: " + dateAdded + " Studio: " + studioName + "\n";

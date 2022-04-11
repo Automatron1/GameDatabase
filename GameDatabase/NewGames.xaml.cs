@@ -19,7 +19,7 @@ namespace GameDatabase
    {
       public static NewGames Current;
       List<Game> gameList = new List<Game>();
-
+      List<String> gamesGenres = new List<String>();
       public NewGames(Window lastWindow)
       {
          InitializeComponent();
@@ -33,7 +33,7 @@ namespace GameDatabase
          if (dbCon.IsConnect())
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
-            string query = " SELECT Games.gameName, Studios.studioName, Games.dateAdded " +
+            string query = " SELECT Games.gameName, Studios.studioName, Games.dateAdded, Games.gameID " +
                "FROM Games JOIN Studios ON Studios.gameID = Games.gameID WHERE Games.dateAdded > CURDATE() - INTERVAL 12 MONTH;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, dbCon.Connection);
             var reader = cmd.ExecuteReader();
@@ -44,31 +44,12 @@ namespace GameDatabase
                nextGame.gameName = reader.GetString(0);
                nextGame.studioName = reader.GetString(1);
                nextGame.dateAdded = reader.GetDateTime(2);
+               nextGame.gameID = reader.GetString(3);
                gameList.Add(nextGame);
                PopulateGameList();
-               //string someStringFromColumnZero = reader.GetString(0);
-               //ListBox.Show(someStringFromColumnZero);
             }
             reader.Close();
-            // dbCon.Close();
-            // querey 2
-            string query1 = "SELECT Genres.genreName FROM GenreList JOIN Games ON Games.gameID = GenreList.gameID " +
-               "JOIN Genres ON GenreList.genreID = Genres.genreID WHERE Games.dateAdded > CURDATE() - INTERVAL 12 MONTH;";
-            var cmd1 = new MySql.Data.MySqlClient.MySqlCommand(query1, dbCon.Connection);
-            var reader1 = cmd1.ExecuteReader();
-            gameList.Clear();
-            while (reader1.Read())
-            {
-               Game nextGame = new Game();
-
-               nextGame.genre = reader1.GetString(0);
-
-               gameList.Add(nextGame);
-               PopulateGenreList();
-            }
-            reader.Close();
-            reader1.Close();
-            //dbCon.Close();
+            dbCon.Close();
          }
       }
       private void PopulateGameList()
@@ -80,13 +61,28 @@ namespace GameDatabase
             gameDisplay.Items.Add(g);
          }
       }
-      private void PopulateGenreList()
+      private void PopulateGenreList(string gameID)
       {
          genreList.Items.Clear();
-         foreach (Game g in gameList)
+
+         var dbCon1 = DBConnection.Instance();
+         dbCon1.Server = "209.106.201.103";
+         dbCon1.DatabaseName = "dbstudent4";
+         dbCon1.UserName = "dbstudent4";
+         dbCon1.Password = "slimydrum98";
+         if (dbCon1.IsConnect())
          {
-            g.displayCase = 2;
-            genreList.Items.Add(g);
+            string genreQuery = "SELECT Genres.genreName FROM Genres NATURAL JOIN GenreList NATURAL JOIN Games WHERE Games.gameID = " + gameID;
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(genreQuery, dbCon1.Connection);
+            var reader2 = cmd.ExecuteReader();
+            gameList.Clear();
+            while (reader2.Read())
+            {
+               String nextGenre = reader2.GetString(0);
+               gamesGenres.Add(nextGenre);
+            }
+            reader2.Close();
+            dbCon1.Close();
          }
       }
       private void backButton_Click(object sender, RoutedEventArgs e)
@@ -96,6 +92,12 @@ namespace GameDatabase
          Preselected.Current.ShowDialog();
       }
 
+      private void gameDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+      {
+            gameList.Clear();
+            Game thisGame = (Game)gameDisplay.SelectedItem;
+            string myGameID = thisGame.gameID;
+            PopulateGenreList(myGameID);
+      }
    }
-
 }
