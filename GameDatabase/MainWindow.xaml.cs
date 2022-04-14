@@ -13,14 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql;
-using System.IO;
 
 namespace GameDatabase
 {
    /// <summary>
    /// Interaction logic for MainWindow.xaml
    /// </summary>
-   public partial class MainWindow : Window //UserControl , ISwitchable
+   public partial class MainWindow : Window
    {
       public static MainWindow Current;
       public MainWindow()
@@ -37,9 +36,6 @@ namespace GameDatabase
          this.Hide();
          findGames.ShowDialog();
          findGames.Show();
-      }
-      public void ControlActivated(object state)
-      {
 
       }
    }

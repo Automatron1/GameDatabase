@@ -20,48 +20,16 @@ namespace GameDatabase
       public static NewGames Current;
       List<Game> gameList = new List<Game>();
       List<String> gamesGenres = new List<String>();
-
-      public DBConnection DatabaseConnection()
+      public NewGames(Window lastWindow)
       {
+         InitializeComponent();
+         Current = this;
+
          var dbCon = DBConnection.Instance();
          dbCon.Server = "209.106.201.103";
          dbCon.DatabaseName = "dbstudent4";
          dbCon.UserName = "dbstudent4";
          dbCon.Password = "slimydrum98";
-         return dbCon;
-      }
-      public NewGames(Window lastWindow)
-      {
-         InitializeComponent();
-         Current = this;
-         PopulateGameList();
-      }
-      private void gameDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
-      {
-         gameList.Clear();
-         Game thisGame = (Game)gameDisplay.SelectedItem;
-         string myGameID = thisGame.gameID;
-         genreList.Items.Clear();
-
-         var dbCon = DatabaseConnection();
-         if (dbCon.IsConnect())
-         {
-            string genreQuery = "SELECT Genres.genreName FROM Genres NATURAL JOIN GenreList NATURAL JOIN Games WHERE Games.gameID = 6";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(genreQuery, dbCon.Connection);
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-               String nextGenre = reader.GetString(0);
-               genreList.Items.Add(nextGenre);
-            }
-            //PopulateGenreList(myGameID);
-            reader.Close();
-            dbCon.Close();
-         }
-      }
-      private void PopulateGameList()
-      {
-         var dbCon = DatabaseConnection();
          if (dbCon.IsConnect())
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
@@ -78,31 +46,58 @@ namespace GameDatabase
                nextGame.dateAdded = reader.GetDateTime(2);
                nextGame.gameID = reader.GetString(3);
                gameList.Add(nextGame);
-            }
-            //Game nextGame = new Game();
-            //nextGame.gameName = "name";
-            //gameList.Add(nextGame);
-            //PopulateGameList();
-            //THIS IS SAMPLE TEST DATA 
-            gameDisplay.Items.Clear();
-            foreach (Game g in gameList)
-            {
-               g.displayCase = 3;
-               gameDisplay.Items.Add(g);
+               PopulateGameList();
             }
             reader.Close();
             dbCon.Close();
          }
       }
+      private void PopulateGameList()
+      {
+         gameDisplay.Items.Clear();
+         foreach (Game g in gameList)
+         {
+            g.displayCase = 3;
+            gameDisplay.Items.Add(g);
+         }
+      }
       private void PopulateGenreList(string gameID)
       {
          genreList.Items.Clear();
+
+         var dbCon1 = DBConnection.Instance();
+         dbCon1.Server = "209.106.201.103";
+         dbCon1.DatabaseName = "dbstudent4";
+         dbCon1.UserName = "dbstudent4";
+         dbCon1.Password = "slimydrum98";
+         if (dbCon1.IsConnect())
+         {
+            string genreQuery = "SELECT Genres.genreName FROM Genres NATURAL JOIN GenreList NATURAL JOIN Games WHERE Games.gameID = " + gameID;
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(genreQuery, dbCon1.Connection);
+            var reader2 = cmd.ExecuteReader();
+            gameList.Clear();
+            while (reader2.Read())
+            {
+               String nextGenre = reader2.GetString(0);
+               gamesGenres.Add(nextGenre);
+            }
+            reader2.Close();
+            dbCon1.Close();
+         }
       }
       private void backButton_Click(object sender, RoutedEventArgs e)
       {
          //previous page
          this.Hide();
          Preselected.Current.ShowDialog();
+      }
+
+      private void gameDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+      {
+            gameList.Clear();
+            Game thisGame = (Game)gameDisplay.SelectedItem;
+            string myGameID = thisGame.gameID;
+            PopulateGenreList(myGameID);
       }
    }
 }

@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Find Games" HorizontalAlignment="Left" Margin="492,301,0,0" 
-                VerticalAlignment="Top" Width="123" Click="Button_Click"/>
+        <Button Content="Find Games" HorizontalAlignment="Left" Margin="492,301,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click"/>
 
     </Grid>
 </Window>
