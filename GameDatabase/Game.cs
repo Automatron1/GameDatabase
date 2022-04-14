@@ -11,10 +11,11 @@ namespace GameDatabase
       public DateTime dateAdded = new DateTime();
       public string gameName { get; set; }
       public string gameID { get; set; }
-   // public string releaseDate = null;
-     // public string[] genreList = new string[10];
-     
-      public int displayCase;
+      public string genre { get; set; }
+        // public string releaseDate = null;
+        // public string[] genreList = new string[10];
+
+        public int displayCase;
       public override string ToString()
       {
          
