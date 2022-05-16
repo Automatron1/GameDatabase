@@ -27,10 +27,10 @@ namespace GameDatabase
          Current = this;
 
          var dbCon = DBConnection.Instance();
-         dbCon.Server = "209.106.201.103";
-         dbCon.DatabaseName = "dbstudent4";
-         dbCon.UserName = "dbstudent4";
-         dbCon.Password = "slimydrum98";
+         dbCon.Server = "******";
+         dbCon.DatabaseName = "*******";
+         dbCon.UserName = "*********";
+         dbCon.Password = "********";
          if (dbCon.IsConnect())
          {
             //suppose col0 and col1 are defined as VARCHAR in the DB
