@@ -66,10 +66,10 @@ namespace GameDatabase
          genreList.Items.Clear();
 
          var dbCon1 = DBConnection.Instance();
-         dbCon1.Server = "209.106.201.103";
-         dbCon1.DatabaseName = "dbstudent4";
-         dbCon1.UserName = "dbstudent4";
-         dbCon1.Password = "slimydrum98";
+         dbCon1.Server = "";
+         dbCon1.DatabaseName = "";
+         dbCon1.UserName = "";
+         dbCon1.Password = "";
          if (dbCon1.IsConnect())
          {
             string genreQuery = "SELECT Genres.genreName FROM Genres NATURAL JOIN GenreList NATURAL JOIN Games WHERE Games.gameID = " + gameID;
